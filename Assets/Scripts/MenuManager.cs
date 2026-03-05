@@ -7,7 +7,7 @@ public class MenuManager : MonoBehaviour
 {
     public void loadGame()
     {
-        PlayerPrefs.SetInt("Score",0);
+        GameManager.Instance.ResetGame();
         SceneManager.LoadScene("GameScene");
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,15 +10,12 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 18f;
     private Rigidbody2D rb;
     private bool isGrounded = false;
-    private int score = 0;
-    private int health = 100;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI healthText;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        UpdateUI();
     }
 
     // Update is called once per frame
@@ -40,10 +36,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            health -= 10;
-            UpdateUI();
-            GameOver();
-            Debug.Log("Health: " + health);
+            GameManager.Instance.TakeDamage(10);
         }
     }
     void OnCollisionExit2D(Collision2D collision)
@@ -57,24 +50,8 @@ public class PlayerMovement : MonoBehaviour
     {
               if (trigger.gameObject.CompareTag("Coin"))
         {
-            score += 10;
+            GameManager.Instance.AddScore(10);
             Destroy(trigger.gameObject);
-            UpdateUI();
-            Debug.Log("Score: "  + score);
-        }
-    }
-    void UpdateUI()
-    {
-        healthText.text = "Health: " + health;
-        scoreText.text = "Score: " + score;
-    }
-    void GameOver()
-    {
-        if(health == 0)
-        {
-            PlayerPrefs.SetInt("FinalScore", score);
-            PlayerPrefs.Save();
-            SceneManager.LoadScene("GameOver");
         }
     }
 }
