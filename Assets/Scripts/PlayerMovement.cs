@@ -10,8 +10,6 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 18f;
     private Rigidbody2D rb;
     private bool isGrounded = false;
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI healthText;
     // Start is called before the first frame update
     void Start()
     {
