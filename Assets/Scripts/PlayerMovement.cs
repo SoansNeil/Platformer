@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+             AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.jumpSound);
         }
     }
     void OnCollisionEnter2D(Collision2D collision)
@@ -36,6 +37,10 @@ public class PlayerMovement : MonoBehaviour
         {
             GameManager.Instance.TakeDamage(10);
         }
+        if (collision.gameObject.CompareTag("Barrier"))
+        {
+            GameManager.Instance.TakeDamage(100);
+        }
     }
     void OnCollisionExit2D(Collision2D collision)
     {
@@ -46,10 +51,19 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D trigger)
     {
-              if (trigger.gameObject.CompareTag("Coin"))
+        if(trigger.gameObject.CompareTag("Coin")){
+        if (GameManager.Instance == null)
         {
+            Debug.LogError("GameManager instance is null!");
+            return;
+        }
+        if (CoinPoolManager.Instance == null)
+        {
+            Debug.LogError("CoinPoolManager instance is null!");
+            return;
+        }
             GameManager.Instance.AddScore(10);
-            Destroy(trigger.gameObject);
+            CoinPoolManager.Instance.ReturnCoin(trigger.gameObject);
         }
     }
 }

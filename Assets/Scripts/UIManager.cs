@@ -26,11 +26,13 @@ public class UIManager : MonoBehaviour
     {
         scoreText.text = "Score: " + newScore;
         Debug.Log("Score: " + newScore);
+        AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.coinSound);
     }
     void UpdateHealth(int newHealth)
     { 
         healthText.text = "Health: " + newHealth;
         Debug.Log("Health: " + newHealth);
+         AudioManager.Instance.PlaySoundEffect(AudioManager.Instance.damageSound);
     } 
     void HandleGameOver()
     {
