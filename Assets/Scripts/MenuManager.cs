@@ -10,4 +10,8 @@ public class MenuManager : MonoBehaviour
         GameManager.Instance.ResetGame();
         SceneManager.LoadScene("GameScene");
     }
+    public void loadScores()
+    {
+         SceneManager.LoadScene("HighScores");
+    }
 }

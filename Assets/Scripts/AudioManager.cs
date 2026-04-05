@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
     {
         ChangeMusic(gameplayMusic);
     }
-    else if (scene.name == "MainMenu")
+    else if (scene.name == "MainMenu" || scene.name == "HighScores")
     {
         ChangeMusic(menuMusic);
     }

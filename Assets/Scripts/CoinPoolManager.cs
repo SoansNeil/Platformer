@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CoinPoolManager : MonoBehaviour
 {
     public static CoinPoolManager Instance { get; private set; }
-    
+    public float respawnDelay = 5f;
     public GameObject coinPrefab;
     
     private ObjectPool coinPool;
@@ -52,10 +52,22 @@ public class CoinPoolManager : MonoBehaviour
     
     public void ReturnCoin(GameObject coin)
     {
+        Vector3 position = coin.transform.position;  // ← save position before returning
         coinPool.Return(coin);
         activeCoins.Remove(coin);
+        StartCoroutine(RespawnCoin(position));
     }
-    
+    private IEnumerator RespawnCoin(Vector3 position)
+    {
+        yield return new WaitForSeconds(respawnDelay);
+        SpawnCoinAt(position);
+    }
+    private void SpawnCoinAt(Vector3 position)
+    {
+        GameObject coin = coinPool.Get();
+        coin.transform.position = position;
+        activeCoins.Add(coin);
+    }
     public void ResetAllCoins()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

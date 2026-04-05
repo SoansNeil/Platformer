@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        GameManager.Instance.StartGame();
     }
 
     // Update is called once per frame
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            GameManager.Instance.TakeDamage(10);
+            GameManager.Instance.TakeDamage(25);
         }
         if (collision.gameObject.CompareTag("Barrier"))
         {
